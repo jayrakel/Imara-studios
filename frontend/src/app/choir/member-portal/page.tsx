@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Music4, Play, Pause, Download, LogOut, Upload, CheckCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import Image from "next/image";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -221,24 +222,51 @@ export default function MemberPortalPage() {
 
   // ─── LOGIN FORM ─────────────────────────────────────────────────────────────
   if (!loggedIn) return (
-    <section style={{ paddingTop: "10rem", paddingBottom: "6rem", minHeight: "100vh", display: "flex", alignItems: "center" }}>
-      <div className="container" style={{ maxWidth: 420 }}>
-        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <div style={{ width: 72, height: 72, borderRadius: "50%", background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem" }}>
-            <Music4 size={32} color="var(--gold)" />
+    <section style={{
+      minHeight: "100vh",
+      background: "var(--charcoal-900)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "2rem"
+    }}>
+      <div style={{ width: "100%", maxWidth: 400 }}>
+
+        {/* Logo Header */}
+        <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+          <div style={{
+            width: 72,
+            height: 72,
+            borderRadius: "20%",
+            background: "var(--charcoal-900)",
+            border: "1px solid rgba(201,168,76,0.3)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0 auto 1.1rem",
+            overflow: "hidden"
+          }}>
+            <Image
+              src="/images/logo.png"
+              alt="Imara Studios"
+              width={48}
+              height={48}
+              quality={100}
+              style={{ borderRadius: "8px" }}
+            />
           </div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.875rem", marginBottom: "0.5rem" }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", marginBottom: "0.5rem" }}>
             Member <span className="gradient-text">Portal</span>
           </h1>
-          <p className="text-secondary" style={{ fontSize: "0.9375rem" }}>
-            Log in with your choir member credentials to access the song library and upload photos.
+          <p className="text-secondary" style={{ color: "var(--text-muted)", fontSize: "0.575rem" }}>
+            Log in with your choir member credentials
           </p>
         </div>
         <form onSubmit={handleLogin} className="card" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <div><label className="form-label" htmlFor="portal-email">Email Address</label><input id="portal-email" type="email" className="input" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required /></div>
           <div><label className="form-label" htmlFor="portal-password">Password</label><input id="portal-password" type="password" className="input" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required /></div>
           <button id="portal-login-btn" type="submit" className="btn btn-gold" style={{ justifyContent: "center" }}>Sign In</button>
-          <p style={{ textAlign: "center", color: "var(--text-muted)", fontSize: "0.8125rem" }}>
+          <p style={{ textAlign: "center", color: "var(--text-muted)", fontSize: "0.5125rem" }}>
             Credentials are managed by the Choir Director.<br />Contact them if you need access.
           </p>
         </form>
@@ -257,8 +285,15 @@ export default function MemberPortalPage() {
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Music4 size={24} color="var(--gold)" />
+            <div style={{ width: 52, height: 52, borderRadius: "50%", background: "var(--charcoal-900)", border: "1px solid rgba(201,168,76,0.3)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+              <Image
+                src="/images/logo.png"
+                alt="Imara Studios"
+                width={36}
+                height={36}
+                quality={100}
+                style={{ borderRadius: "6px" }}
+              />
             </div>
             <div>
               <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.125rem" }}>{user?.name}</div>

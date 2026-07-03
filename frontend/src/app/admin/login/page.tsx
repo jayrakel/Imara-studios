@@ -52,8 +52,15 @@ export default function AdminLoginPage() {
       <div style={{ width: "100%", maxWidth: 400 }}>
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 64, height: 64, borderRadius: 16, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.2)", marginBottom: "1rem" }}>
-            <Shield size={28} color="var(--gold)" />
+          <div style={{ width: 72, height: 72, borderRadius: "20%", background: "var(--charcoal-900)", border: "1px solid rgba(201,168,76,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.2rem", overflow: "hidden" }}>
+            <Image
+              src="/images/logo.png"
+              alt="Imara Studios Admin"
+              width={48}
+              height={48}
+              quality={100}
+              style={{ borderRadius: "8px" }}
+            />
           </div>
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 700, color: "var(--gold)", letterSpacing: "0.1em" }}>IMARA ADMIN</h1>
           <p style={{ color: "var(--text-muted)", fontSize: "0.875rem", marginTop: "0.375rem" }}>Secure Dashboard Access</p>
