@@ -1,0 +1,189 @@
+// Imara Studios — Prisma Schema (Prisma 5)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  STUDIO_ENGINEER
+  CHOIR_DIRECTOR
+  CHOIR_MEMBER
+}
+
+enum InquiryStatus {
+  NEW
+  IN_DISCUSSION
+  QUOTED
+  BOOKED
+  COMPLETED
+  ARCHIVED
+}
+
+enum InquiryType {
+  STUDIO_SERVICES
+  CHOIR_BOOKING
+}
+
+enum ServiceType {
+  MUSIC_RECORDING
+  MUSIC_PRODUCTION
+  VOCAL_TRAINING
+  VIDEO_SHOOTING
+  VIDEO_PRODUCTION
+}
+
+enum PhotoStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AuditionStatus {
+  PENDING
+  SHORTLISTED
+  REJECTED
+  ACCEPTED
+}
+
+model User {
+  id             String    @id @default(uuid())
+  email          String    @unique
+  passwordHash   String
+  name           String
+  role           UserRole  @default(CHOIR_MEMBER)
+  avatarUrl      String?
+  isActive       Boolean   @default(true)
+  refreshTokens  RefreshToken[]
+  uploadedPhotos GalleryPhoto[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  revoked   Boolean  @default(false)
+  userAgent String?
+  ipAddress String?
+  @@map("refresh_tokens")
+}
+
+model Inquiry {
+  id               String        @id @default(uuid())
+  type             InquiryType
+  status           InquiryStatus @default(NEW)
+  clientName       String
+  clientEmail      String
+  clientPhone      String?
+  clientCompany    String?
+  serviceType      ServiceType?
+  message          String
+  preferredDate    DateTime?
+  numTracks        Int?
+  estimatedRuntime String?
+  referenceLinks   String[]
+  eventDate        DateTime?
+  venueName        String?
+  audienceSize     Int?
+  repertoireStyle  String?
+  quotedAmount     Decimal?      @db.Decimal(10, 2)
+  notes            String?
+  emailReplies     EmailReply[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  @@map("inquiries")
+}
+
+model EmailReply {
+  id        String   @id @default(uuid())
+  inquiryId String
+  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  subject   String
+  body      String
+  sentAt    DateTime @default(now())
+  @@map("email_replies")
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  venue       String?
+  eventDate   DateTime
+  endDate     DateTime?
+  isPublic    Boolean   @default(true)
+  isBlocked   Boolean   @default(false)
+  ticketUrl   String?
+  imageUrl    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  @@map("events")
+}
+
+model GalleryPhoto {
+  id          String      @id @default(uuid())
+  uploaderId  String?
+  uploader    User?       @relation(fields: [uploaderId], references: [id], onDelete: SetNull)
+  filename    String
+  url         String
+  caption     String?
+  altText     String?
+  status      PhotoStatus @default(PENDING)
+  category    String?
+  sortOrder   Int         @default(0)
+  publishedAt DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  @@map("gallery_photos")
+}
+
+model AuditionApplication {
+  id              String         @id @default(uuid())
+  name            String
+  email           String
+  phone           String?
+  vocalRange      String
+  vocalPart       String?
+  experienceYears Int?
+  experienceNotes String?
+  mediaLinks      String[]
+  mediaFiles      String[]
+  availability    String?
+  motivation      String?
+  status          AuditionStatus @default(PENDING)
+  reviewNotes     String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  @@map("audition_applications")
+}
+
+model ContentBlock {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  type      String   @default("text")
+  label     String?
+  group     String?
+  updatedAt DateTime @updatedAt
+  @@map("content_blocks")
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  label     String?
+  updatedAt DateTime @updatedAt
+  @@map("settings")
+}

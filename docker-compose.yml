@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: imara_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: imara_studios
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - imara_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: imara_api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/imara_studios
+      # Override with Doppler: doppler run -- docker-compose up
+    env_file:
+      - ./backend/.env
+    volumes:
+      - imara_uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Frontend (optional — use Vercel for prod)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: imara_web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:4000
+    depends_on:
+      - backend
+
+volumes:
+  imara_db_data:
+  imara_uploads:

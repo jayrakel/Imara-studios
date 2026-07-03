@@ -1,0 +1,7 @@
+# Doppler Configuration
+# Run: doppler setup --project imara-studios --config dev
+# Then use: doppler run -- <command>
+
+setup:
+  project: imara-studios
+  config: dev
