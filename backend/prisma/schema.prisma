@@ -51,18 +51,28 @@ enum AuditionStatus {
   ACCEPTED
 }
 
+enum SongCategory {
+  REHEARSAL
+  PERFORMANCE
+  ARCHIVE
+}
+
 model User {
-  id             String    @id @default(uuid())
-  email          String    @unique
+  id             String        @id @default(uuid())
+  email          String        @unique
   passwordHash   String
   name           String
-  role           UserRole  @default(CHOIR_MEMBER)
+  role           UserRole      @default(CHOIR_MEMBER)
   avatarUrl      String?
-  isActive       Boolean   @default(true)
+  vocalRange     String?
+  vocalPart      String?
+  isActive       Boolean       @default(true)
+  tempPassword   Boolean       @default(false)
   refreshTokens  RefreshToken[]
   uploadedPhotos GalleryPhoto[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  uploadedSongs  ChoirSong[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
   @@map("users")
 }
 
@@ -186,4 +196,32 @@ model Setting {
   label     String?
   updatedAt DateTime @updatedAt
   @@map("settings")
+}
+
+model ChoirSong {
+  id           String       @id @default(uuid())
+  title        String
+  artist       String?
+  category     SongCategory @default(PERFORMANCE)
+  filename     String
+  url          String
+  coverArtUrl  String?
+  durationSecs Int?
+  isPublic     Boolean      @default(false)
+  sortOrder    Int          @default(0)
+  uploadedById String?
+  uploadedBy   User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  @@map("choir_songs")
+}
+
+model SiteImage {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  label     String
+  url       String
+  filename  String
+  updatedAt DateTime @updatedAt
+  @@map("site_images")
 }

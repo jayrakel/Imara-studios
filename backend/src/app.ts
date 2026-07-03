@@ -12,6 +12,8 @@ import { galleryRouter } from './routes/gallery';
 import { auditionsRouter } from './routes/auditions';
 import { settingsRouter } from './routes/settings';
 import { contentRouter } from './routes/content';
+import { songsRouter } from './routes/songs';
+import { mediaRouter } from './routes/media';
 import { errorHandler } from './middleware/errorHandler';
 import { logger } from './lib/logger';
 
@@ -79,6 +81,8 @@ app.use('/api/gallery', galleryRouter);
 app.use('/api/auditions', auditionsRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/content', contentRouter);
+app.use('/api/songs', songsRouter);
+app.use('/api/media', mediaRouter);
 
 // ─── Health Check ────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {

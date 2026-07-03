@@ -108,7 +108,7 @@ authRouter.get('/me', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user!.id },
-      select: { id: true, email: true, name: true, role: true, avatarUrl: true, createdAt: true }
+      select: { id: true, email: true, name: true, role: true, avatarUrl: true, vocalRange: true, vocalPart: true, tempPassword: true, createdAt: true }
     });
     if (!user) {
       res.status(404).json({ error: 'User not found' });
@@ -150,4 +150,104 @@ authRouter.post('/change-password', authenticate, async (req: AuthRequest, res: 
   } catch {
     res.status(500).json({ error: 'Password change failed' });
   }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// MEMBER MANAGEMENT — Admin / Choir Director only
+// ═══════════════════════════════════════════════════════════════
+
+function isAdminRole(role: string) {
+  return ['SUPER_ADMIN', 'CHOIR_DIRECTOR'].includes(role);
+}
+function requireAdmin(req: AuthRequest, res: Response): boolean {
+  if (!req.user || !isAdminRole(req.user.role)) {
+    res.status(403).json({ error: 'Admin access required' });
+    return false;
+  }
+  return true;
+}
+
+// GET /api/auth/members — List all users
+authRouter.get('/members', authenticate, async (req: AuthRequest, res: Response) => {
+  if (!requireAdmin(req, res)) return;
+  const members = await prisma.user.findMany({
+    orderBy: { name: 'asc' },
+    select: { id: true, name: true, email: true, role: true, vocalRange: true, vocalPart: true, isActive: true, tempPassword: true, createdAt: true }
+  });
+  res.json(members);
+});
+
+// POST /api/auth/members — Create a member account
+authRouter.post('/members', authenticate, async (req: AuthRequest, res: Response) => {
+  if (!requireAdmin(req, res)) return;
+  const { name, email, password, vocalRange, vocalPart, role } = req.body as Record<string, string>;
+  if (!name || !email || !password) { res.status(400).json({ error: 'name, email, and password are required' }); return; }
+
+  const existing = await prisma.user.findUnique({ where: { email: email.toLowerCase().trim() } });
+  if (existing) { res.status(409).json({ error: 'A user with this email already exists' }); return; }
+
+  const validRoles = ['CHOIR_MEMBER', 'CHOIR_DIRECTOR', 'STUDIO_ENGINEER', 'SUPER_ADMIN'];
+  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+  const user = await prisma.user.create({
+    data: {
+      name: name.trim(), email: email.toLowerCase().trim(), passwordHash,
+      role: (validRoles.includes(role) ? role : 'CHOIR_MEMBER') as any,
+      vocalRange: vocalRange || undefined, vocalPart: vocalPart || undefined, tempPassword: true,
+    },
+    select: { id: true, name: true, email: true, role: true, vocalRange: true, isActive: true }
+  });
+
+  try {
+    const { sendMemberWelcome } = await import('../lib/email');
+    await sendMemberWelcome({ to: email, name, tempPassword: password });
+  } catch (e) { logger.warn('Welcome email failed:', e); }
+
+  res.status(201).json({ message: 'Member account created', user });
+});
+
+// PATCH /api/auth/members/:id — Update member
+authRouter.patch('/members/:id', authenticate, async (req: AuthRequest, res: Response) => {
+  if (!requireAdmin(req, res)) return;
+  const { name, vocalRange, vocalPart, role, isActive } = req.body as Record<string, string>;
+  const validRoles = ['CHOIR_MEMBER', 'CHOIR_DIRECTOR', 'STUDIO_ENGINEER', 'SUPER_ADMIN'];
+  const user = await prisma.user.update({
+    where: { id: String(req.params.id) },
+    data: {
+      name: name?.trim() || undefined, vocalRange: vocalRange || undefined, vocalPart: vocalPart || undefined,
+      role: validRoles.includes(role) ? (role as any) : undefined,
+      isActive: isActive !== undefined ? isActive === 'true' : undefined,
+    },
+    select: { id: true, name: true, email: true, role: true, vocalRange: true, isActive: true }
+  });
+  res.json(user);
+});
+
+// POST /api/auth/members/:id/reset-password — Reset password and email it
+authRouter.post('/members/:id/reset-password', authenticate, async (req: AuthRequest, res: Response) => {
+  if (!requireAdmin(req, res)) return;
+  const { newPassword } = req.body as Record<string, string>;
+  if (!newPassword || newPassword.length < 8) { res.status(400).json({ error: 'newPassword must be at least 8 characters' }); return; }
+
+  const passwordHash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+  const user = await prisma.user.update({
+    where: { id: String(req.params.id) }, data: { passwordHash, tempPassword: true },
+    select: { id: true, name: true, email: true }
+  });
+  await revokeAllUserTokens(user.id);
+
+  try {
+    const { sendMemberWelcome } = await import('../lib/email');
+    await sendMemberWelcome({ to: user.email, name: user.name, tempPassword: newPassword });
+  } catch (e) { logger.warn('Reset email failed:', e); }
+
+  res.json({ message: `Password reset for ${user.name}. Credentials emailed.` });
+});
+
+// DELETE /api/auth/members/:id — Soft-deactivate
+authRouter.delete('/members/:id', authenticate, async (req: AuthRequest, res: Response) => {
+  if (!requireAdmin(req, res)) return;
+  const memberId = String(req.params.id);
+  await prisma.user.update({ where: { id: memberId }, data: { isActive: false } });
+  await revokeAllUserTokens(memberId);
+  res.json({ message: 'Member deactivated' });
 });

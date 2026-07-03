@@ -159,3 +159,51 @@ export async function sendInquiryReply(params: {
     html,
   });
 }
+
+// ─── Welcome email for new choir member accounts ──────────────────
+export async function sendMemberWelcome(params: {
+  to: string;
+  name: string;
+  tempPassword: string;
+}) {
+  const { to, name, tempPassword } = params;
+  const portalUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/choir/member-portal`;
+
+  const html = `
+    <!DOCTYPE html><html><body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#0a0a0a;color:#f0ede8;margin:0;padding:0;">
+      <div style="max-width:600px;margin:0 auto;">
+        <div style="background:#141414;padding:32px 48px;border-bottom:2px solid #C9A84C;">
+          <div style="color:#C9A84C;font-size:24px;font-weight:700;letter-spacing:3px;">IMARA <span style="color:#f0ede8;font-weight:300;font-size:12px;letter-spacing:6px;">STUDIOS</span></div>
+        </div>
+        <div style="background:#141414;padding:48px;">
+          <p style="font-size:20px;font-weight:700;margin-bottom:8px;">Welcome to the choir, ${name}! 🎶</p>
+          <p style="color:#a8a29e;line-height:1.7;">Your member account for the Imara Studios Choir Hub has been created. You can log in below using your temporary credentials.</p>
+          <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-left:3px solid #C9A84C;padding:20px 24px;border-radius:6px;margin:24px 0;">
+            <p style="color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:0 0 12px 0;">Your Login Credentials</p>
+            <p style="margin:4px 0;color:#f0ede8;"><strong style="color:#888;min-width:80px;display:inline-block;">Email:</strong> ${to}</p>
+            <p style="margin:4px 0;color:#f0ede8;"><strong style="color:#888;min-width:80px;display:inline-block;">Password:</strong> <code style="color:#C9A84C;font-size:14px;">${tempPassword}</code></p>
+          </div>
+          <div style="background:#1a2a1a;border:1px solid #2a4a2a;border-radius:6px;padding:16px 20px;margin:24px 0;">
+            <p style="color:#6aaa6a;margin:0;">⚠️ Please change your password after your first login for security.</p>
+          </div>
+          <a href="${portalUrl}" style="display:inline-block;background:#C9A84C;color:#000;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;margin-top:8px;">
+            Login to Member Portal →
+          </a>
+          <p style="color:#a8a29e;margin-top:32px;">Through the portal you can access rehearsal songs, submit photos, and stay updated on upcoming events.</p>
+          <p style="color:#f0ede8;margin-top:24px;">See you at rehearsal!<br/><strong style="color:#C9A84C;">Imara Studios Choir</strong></p>
+        </div>
+        <div style="background:#0d0d0d;padding:24px 48px;text-align:center;">
+          <p style="color:#555;font-size:12px;">© ${new Date().getFullYear()} Imara Studios — Nakuru, Kenya</p>
+        </div>
+      </div>
+    </body></html>
+  `;
+
+  try {
+    await resend.emails.send({ from: FROM, to, subject: '🎶 Welcome to Imara Studios Choir — Your Login Details', html });
+    logger.info(`Welcome email sent to ${to}`);
+  } catch (err) {
+    logger.error('Failed to send member welcome email:', err);
+    throw err;
+  }
+}
