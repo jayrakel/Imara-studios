@@ -4,7 +4,7 @@ import { Quote, Star } from "lucide-react";
 
 const testimonials = [
   { id: "t1", name: "David Mwangi", role: "Recording Artist", quote: "The sound quality is incredible. I've recorded in studios across East Africa and Imara tops them all. The engineers truly understand how to bring out the best in a vocal." },
-  { id: "t2", name: "Amina Hassan", role: "Corporate Events Manager, KCB", quote: "We hired the Imara Choir for our annual gala and they received a standing ovation. Professional, punctual, and absolutely mesmerising. We're already planning our next booking." },
+  { id: "t2", name: "Amina Hassan", role: "Corporate Events Manager, KCB", quote: "We hired the Imara Chorale for our annual gala and they received a standing ovation. Professional, punctual, and absolutely mesmerising. We're already planning our next booking." },
   { id: "t3", name: "Peter Kariuki", role: "Independent Producer", quote: "The production quality and turnaround time is unmatched. My singles have gained serious traction since I started working with Imara Studios." },
   { id: "t4", name: "Grace Wanjiru", role: "Vocal Student", quote: "My vocal range has improved dramatically in just 8 weeks of training here. The coaches are patient, skilled, and genuinely invested in your growth." },
 ];

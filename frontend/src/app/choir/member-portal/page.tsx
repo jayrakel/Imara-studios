@@ -391,7 +391,7 @@ export default function MemberPortalPage() {
                       {/* Info */}
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontWeight: 600, fontSize: "0.9375rem", color: currentSong?.id === song.id ? "var(--gold)" : "var(--text-primary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.title}</div>
-                        <div style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>{song.artist || "Imara Choir"}</div>
+                        <div style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>{song.artist || "Imara Chorale"}</div>
                       </div>
 
                       {/* Category badge */}
@@ -426,7 +426,7 @@ export default function MemberPortalPage() {
                 </button>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 600, fontSize: "0.9375rem", color: "var(--gold)" }}>{currentSong.title}</div>
-                  <div style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>{currentSong.artist || "Imara Choir"} · {currentSong.category}</div>
+                  <div style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>{currentSong.artist || "Imara Chorale"} · {currentSong.category}</div>
                 </div>
                 <div className="soundwave" style={{ display: playing ? "flex" : "none" }}>
                   <span /><span /><span /><span /><span />

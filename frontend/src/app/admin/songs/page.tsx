@@ -95,7 +95,7 @@ export default function AdminSongsPage() {
                             <input type="file" accept="image/*" onChange={e => setCoverFile(e.target.files?.[0] || null)} className="input" style={{ padding: "0.5rem" }} />
                         </div>
                         <div><label className="form-label">Song Title *</label><input className="input" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} required /></div>
-                        <div><label className="form-label">Artist / Arranger</label><input className="input" value={form.artist} onChange={e => setForm({ ...form, artist: e.target.value })} placeholder="Imara Choir" /></div>
+                        <div><label className="form-label">Artist / Arranger</label><input className="input" value={form.artist} onChange={e => setForm({ ...form, artist: e.target.value })} placeholder="Imara Chorale" /></div>
                         <div>
                             <label className="form-label">Category</label>
                             <select className="select" value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}>
@@ -128,7 +128,7 @@ export default function AdminSongsPage() {
                             </div>
                             <div style={{ flex: 1, minWidth: 0 }}>
                                 <div style={{ fontWeight: 600, fontSize: "0.9rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{song.title}</div>
-                                <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{song.artist || "Imara Choir"} • {song.category}</div>
+                                <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{song.artist || "Imara Chorale"} • {song.category}</div>
                             </div>
                             <div style={{ display: "flex", gap: "0.5rem" }}>
                                 <button onClick={() => togglePublic(song.id, song.isPublic)} title={song.isPublic ? "Make Private" : "Make Public"} style={{ background: "none", border: "none", cursor: "pointer", color: song.isPublic ? "#10b981" : "var(--text-muted)" }}>

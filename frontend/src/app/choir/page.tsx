@@ -5,19 +5,19 @@ import type { Metadata } from "next";
 import SiteImage from "@/components/common/SiteImage";
 
 export const metadata: Metadata = {
-  title: "The Imara Choir — Performances, Events & Bookings",
-  description: "Meet the Imara Choir — a 14-voice professional ensemble available for weddings, corporate events, and studio session vocals in Nakuru.",
+  title: "The Imara Chorale — Performances, Events & Bookings",
+  description: "Meet the Imara Chorale — a 14-voice professional ensemble available for weddings, corporate events, and studio session vocals in Nakuru.",
 };
 
 const gallery = [
-  { src: "/images/choir-hero.jpg", alt: "Imara Choir performing at a gala", span: 2 },
+  { src: "/images/choir-hero.jpg", alt: "Imara Chorale performing at a gala", span: 2 },
   { src: "/images/vocal-training.jpg", alt: "Choir rehearsal session", span: 1 },
   { src: "/images/studio-hero.jpg", alt: "Choir recording in studio", span: 1 },
 ];
 
 const packages = [
   { id: "wedding", emoji: "💍", title: "Wedding Package", price: "50,000", desc: "Elevate your special day with live choral accompaniment — processional, ceremonial, and reception sets.", features: ["Processional & recessional", "2 ceremony songs", "1 reception performance set", "Full sound system included"] },
-  { id: "corporate", emoji: "🏢", title: "Corporate Event", price: "70,000", desc: "From galas to product launches — the Imara Choir adds prestige and emotion to any corporate function.", features: ["45-minute performance set", "Custom repertoire selection", "Professional attire", "PA & sound engineer"] },
+  { id: "corporate", emoji: "🏢", title: "Corporate Event", price: "70,000", desc: "From galas to product launches — the Imara Chorale adds prestige and emotion to any corporate function.", features: ["45-minute performance set", "Custom repertoire selection", "Professional attire", "PA & sound engineer"] },
   { id: "studio-session", emoji: "🎙️", title: "Studio Session Vocals", price: "45,000", desc: "Hire the Choir to provide background or lead vocals on your recording project.", features: ["3-hour studio session", "SATB full arrangement", "Harmony coaching included", "Session files delivered"] },
 ];
 
@@ -122,7 +122,7 @@ export default function ChoirPage() {
             <span className="section-label">Performance Packages</span>
             <h2 className="display-md" style={{ marginTop: "0.5rem" }}>Invite the <span className="gradient-text">Choir</span></h2>
             <div className="gold-divider-center" />
-            <p className="text-secondary" style={{ maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>The Imara Choir is available for a wide range of events. All packages are customisable to your vision.</p>
+            <p className="text-secondary" style={{ maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>The Imara Chorale is available for a wide range of events. All packages are customisable to your vision.</p>
           </div>
           <div className="pricing-grid">
             {packages.map((pkg) => (
@@ -153,7 +153,7 @@ export default function ChoirPage() {
       <section style={{ background: "var(--charcoal-700)", padding: "3rem 0", textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
         <div className="container">
           <Users size={32} color="var(--gold)" style={{ marginBottom: "1rem" }} />
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", marginBottom: "0.5rem" }}>Are you an Imara Choir member?</h3>
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", marginBottom: "0.5rem" }}>Are you an Imara Chorale member?</h3>
           <p className="text-secondary" style={{ marginBottom: "1.5rem" }}>Upload performance photos and manage your profile through our secure member portal.</p>
           <Link href="/choir/member-portal" id="choir-member-portal-link" className="btn btn-outline">Access Member Portal</Link>
         </div>

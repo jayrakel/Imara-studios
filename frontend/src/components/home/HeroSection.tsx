@@ -112,7 +112,7 @@ export default function HeroSection() {
             opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(20px)",
             transition: "all 0.7s ease 0.4s",
           }}>
-            Premium music recording, production, vocal coaching & video — all under one roof. Home of the celebrated <strong style={{ color: "var(--text-primary)" }}>Imara Choir</strong>.
+            Premium music recording, production, vocal coaching & video — all under one roof. Home of the celebrated <strong style={{ color: "var(--text-primary)" }}>Imara Chorale</strong>.
           </p>
 
           {/* CTAs */}

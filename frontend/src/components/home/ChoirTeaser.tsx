@@ -9,7 +9,7 @@ export default function ChoirTeaser() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
           {/* Image Side */}
           <div style={{ position: "relative", borderRadius: "var(--radius-xl)", overflow: "hidden", aspectRatio: "4/3" }}>
-            <Image src="/images/choir-hero.jpg" alt="The Imara Choir performing live" fill style={{ objectFit: "cover" }} sizes="(max-width:768px) 100vw, 50vw" />
+            <Image src="/images/choir-hero.jpg" alt="The Imara Chorale performing live" fill style={{ objectFit: "cover" }} sizes="(max-width:768px) 100vw, 50vw" />
             {/* Gold frame accent */}
             <div style={{
               position: "absolute", inset: 0,
@@ -24,7 +24,7 @@ export default function ChoirTeaser() {
               padding: "1rem 1.5rem", display: "flex", alignItems: "center", gap: "0.75rem",
             }}>
               <div className="soundwave">
-                <span/><span/><span/><span/><span/>
+                <span /><span /><span /><span /><span />
               </div>
               <div>
                 <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.25rem", color: "var(--gold)" }}>14</div>
@@ -35,13 +35,13 @@ export default function ChoirTeaser() {
 
           {/* Content Side */}
           <div>
-            <span className="section-label">The Imara Choir</span>
+            <span className="section-label">The Imara Chorale</span>
             <h2 className="display-md" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
               A Voice That <span className="gradient-text">Moves</span> the Room
             </h2>
             <div className="gold-divider" />
             <p className="text-secondary" style={{ fontSize: "1.0625rem", lineHeight: 1.75, marginBottom: "2rem" }}>
-              A 14-voice ensemble rooted in excellence and versatility. From intimate corporate settings to grand concert halls, the Imara Choir brings unparalleled presence and emotion to every performance.
+              A 14-voice ensemble rooted in excellence and versatility. From intimate corporate settings to grand concert halls, the Imara Chorale brings unparalleled presence and emotion to every performance.
             </p>
 
             {/* Feature pills */}

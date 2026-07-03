@@ -99,7 +99,7 @@ export default function AuditionsPage() {
         <div className="container">
           <span className="section-label">🎤 Auditions Open</span>
           <h1 className="display-md" style={{ marginTop: "0.75rem", marginBottom: "0.5rem" }}>
-            Join the <span className="gradient-text">Imara Choir</span>
+            Join the <span className="gradient-text">Imara Chorale</span>
           </h1>
           <div className="gold-divider-center" />
           <p className="text-secondary" style={{ maxWidth: 480, margin: "0 auto" }}>
@@ -168,7 +168,7 @@ export default function AuditionsPage() {
                     <input id="aud-files" type="file" accept="audio/*,video/*" multiple style={{ display: "none" }} onChange={(e) => setFiles(Array.from(e.target.files || []))} />
                   </label>
                 </div>
-                <div><label className="form-label" htmlFor="aud-motivation">Why do you want to join the Imara Choir?</label><textarea id="aud-motivation" className="textarea" placeholder="Tell us your motivation..." value={formData.motivation} onChange={(e) => set("motivation", e.target.value)} /></div>
+                <div><label className="form-label" htmlFor="aud-motivation">Why do you want to join the Imara Chorale?</label><textarea id="aud-motivation" className="textarea" placeholder="Tell us your motivation..." value={formData.motivation} onChange={(e) => set("motivation", e.target.value)} /></div>
               </div>
             )}
 

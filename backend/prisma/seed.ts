@@ -78,7 +78,7 @@ async function main() {
 
   // ─── Sample upcoming events ──────────────────────────────────────
   const events = [
-    { title: 'Imara Choir Christmas Concert', description: 'A magical evening of festive choral performances. Join us for a night to remember.', venue: 'Alliance Française, Nakuru', eventDate: new Date('2026-12-20T19:00:00'), isPublic: true },
+    { title: 'Imara Chorale Christmas Concert', description: 'A magical evening of festive choral performances. Join us for a night to remember.', venue: 'Alliance Française, Nakuru', eventDate: new Date('2026-12-20T19:00:00'), isPublic: true },
     { title: 'Corporate Gala — TBA', description: 'Private corporate performance. Date blocked for planning.', venue: 'TBA', eventDate: new Date('2026-08-15T18:00:00'), isBlocked: true, isPublic: false },
     { title: 'Studio Open Day', description: 'Explore the studio, meet the team, and hear the choir live.', venue: 'Imara Studios, Nakuru', eventDate: new Date('2026-09-06T10:00:00'), isPublic: true },
   ];

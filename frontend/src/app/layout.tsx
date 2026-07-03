@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     default: "Imara Studios — Premium Music & Media Production | Nakuru",
   },
   description:
-    "Imara Studios is Nakuru's premier music recording, production, vocal training, and video production studio. Home of the acclaimed Imara Choir.",
+    "Imara Studios is Nakuru's premier music recording, production, vocal training, and video production studio. Home of the acclaimed Imara Chorale.",
   keywords: [
     "music studio nakuru",
     "recording studio kenya",
