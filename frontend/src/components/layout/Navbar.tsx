@@ -62,7 +62,15 @@ export default function Navbar() {
         <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
           {/* Logo */}
           <Link href="/" id="nav-logo" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
-            <Image src="/images/logo.png" alt="Imara Studios" width={44} height={44} style={{ borderRadius: 6 }} priority />
+            <Image
+              src="/images/logo.png"
+              alt="Imara Studios"
+              width={60}
+              height={60}
+              quality={100}
+              style={{ borderRadius: 8 }}
+              priority
+            />
             <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.125rem", letterSpacing: "0.1em", color: "var(--gold)" }}>
               IMARA<span style={{ color: "var(--text-primary)", fontWeight: 300, fontSize: "0.75rem", display: "block", letterSpacing: "0.25em", lineHeight: 1 }}>STUDIOS</span>
             </span>

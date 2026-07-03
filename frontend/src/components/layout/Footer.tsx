@@ -32,7 +32,14 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none", marginBottom: "1.25rem" }}>
-              <Image src="/images/logo.png" alt="Imara Studios" width={40} height={40} style={{ borderRadius: 6 }} />
+              <Image
+                src="/images/logo.png"
+                alt="Imara Studios"
+                width={80}
+                height={80}
+                quality={100}
+                style={{ borderRadius: 10 }}
+              />
               <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1rem", letterSpacing: "0.12em", color: "var(--gold)" }}>
                 IMARA<span style={{ color: "var(--text-primary)", fontWeight: 300, fontSize: "0.65rem", display: "block", letterSpacing: "0.3em" }}>STUDIOS</span>
               </span>

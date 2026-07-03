@@ -84,58 +84,62 @@ function ContactForm() {
 
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
         {/* Common Fields */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+        <div className="form-input-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
           <div><label className="form-label" htmlFor="contact-name">Full Name *</label><input id="contact-name" className="input" placeholder="Your name" value={form.clientName} onChange={(e) => set("clientName", e.target.value)} required /></div>
           <div><label className="form-label" htmlFor="contact-email">Email *</label><input id="contact-email" type="email" className="input" placeholder="your@email.com" value={form.clientEmail} onChange={(e) => set("clientEmail", e.target.value)} required /></div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+        <div className="form-input-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
           <div><label className="form-label" htmlFor="contact-phone">Phone</label><input id="contact-phone" className="input" placeholder="+254..." value={form.clientPhone} onChange={(e) => set("clientPhone", e.target.value)} /></div>
           <div><label className="form-label" htmlFor="contact-company">Company / Organisation</label><input id="contact-company" className="input" placeholder="Optional" value={form.clientCompany} onChange={(e) => set("clientCompany", e.target.value)} /></div>
         </div>
 
         {/* Studio Services conditional fields */}
-        {tab === "STUDIO_SERVICES" && (
-          <>
-            <div>
-              <label className="form-label" htmlFor="contact-service">Service Required *</label>
-              <select id="contact-service" className="select" value={form.serviceType} onChange={(e) => set("serviceType", e.target.value)} required>
-                <option value="">Select a service...</option>
-                {services.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
-              </select>
-            </div>
-            {form.serviceType === "MUSIC_RECORDING" && (
-              <div><label className="form-label" htmlFor="contact-num-tracks">Number of Tracks</label><input id="contact-num-tracks" type="number" className="input" placeholder="How many tracks do you need to record?" value={form.numTracks} onChange={(e) => set("numTracks", e.target.value)} /></div>
-            )}
-            {form.serviceType === "VIDEO_PRODUCTION" && (
-              <>
-                <div><label className="form-label" htmlFor="contact-runtime">Estimated Run Time</label><input id="contact-runtime" className="input" placeholder="e.g., 3-minute music video" value={form.estimatedRuntime} onChange={(e) => set("estimatedRuntime", e.target.value)} /></div>
-                <div><label className="form-label" htmlFor="contact-refs">Reference Links</label><textarea id="contact-refs" className="textarea" placeholder="YouTube or social links of videos you love (one per line)" value={form.referenceLinks} onChange={(e) => set("referenceLinks", e.target.value)} style={{ minHeight: 80 }} /></div>
-              </>
-            )}
-          </>
-        )}
+        {
+          tab === "STUDIO_SERVICES" && (
+            <>
+              <div>
+                <label className="form-label" htmlFor="contact-service">Service Required *</label>
+                <select id="contact-service" className="select" value={form.serviceType} onChange={(e) => set("serviceType", e.target.value)} required>
+                  <option value="">Select a service...</option>
+                  {services.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+                </select>
+              </div>
+              {form.serviceType === "MUSIC_RECORDING" && (
+                <div><label className="form-label" htmlFor="contact-num-tracks">Number of Tracks</label><input id="contact-num-tracks" type="number" className="input" placeholder="How many tracks do you need to record?" value={form.numTracks} onChange={(e) => set("numTracks", e.target.value)} /></div>
+              )}
+              {form.serviceType === "VIDEO_PRODUCTION" && (
+                <>
+                  <div><label className="form-label" htmlFor="contact-runtime">Estimated Run Time</label><input id="contact-runtime" className="input" placeholder="e.g., 3-minute music video" value={form.estimatedRuntime} onChange={(e) => set("estimatedRuntime", e.target.value)} /></div>
+                  <div><label className="form-label" htmlFor="contact-refs">Reference Links</label><textarea id="contact-refs" className="textarea" placeholder="YouTube or social links of videos you love (one per line)" value={form.referenceLinks} onChange={(e) => set("referenceLinks", e.target.value)} style={{ minHeight: 80 }} /></div>
+                </>
+              )}
+            </>
+          )
+        }
 
         {/* Choir Booking conditional fields */}
-        {tab === "CHOIR_BOOKING" && (
-          <>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-              <div><label className="form-label" htmlFor="contact-event-date">Event Date *</label><input id="contact-event-date" type="date" className="input" value={form.eventDate} onChange={(e) => set("eventDate", e.target.value)} required /></div>
-              <div><label className="form-label" htmlFor="contact-audience">Expected Audience Size</label><input id="contact-audience" type="number" className="input" placeholder="e.g., 200" value={form.audienceSize} onChange={(e) => set("audienceSize", e.target.value)} /></div>
-            </div>
-            <div><label className="form-label" htmlFor="contact-venue">Venue Name</label><input id="contact-venue" className="input" placeholder="e.g., KICC Nakuru" value={form.venueName} onChange={(e) => set("venueName", e.target.value)} /></div>
-            <div>
-              <label className="form-label" htmlFor="contact-repertoire">Repertoire Style</label>
-              <select id="contact-repertoire" className="select" value={form.repertoireStyle} onChange={(e) => set("repertoireStyle", e.target.value)}>
-                <option value="">Select a style...</option>
-                <option>Gospel / Sacred</option>
-                <option>Classical</option>
-                <option>Afropop / Contemporary</option>
-                <option>Corporate / Cinematic</option>
-                <option>Mixed / Custom</option>
-              </select>
-            </div>
-          </>
-        )}
+        {
+          tab === "CHOIR_BOOKING" && (
+            <>
+              <div className="form-input-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div><label className="form-label" htmlFor="contact-event-date">Event Date *</label><input id="contact-event-date" type="date" className="input" value={form.eventDate} onChange={(e) => set("eventDate", e.target.value)} required /></div>
+                <div><label className="form-label" htmlFor="contact-audience">Expected Audience Size</label><input id="contact-audience" type="number" className="input" placeholder="e.g., 200" value={form.audienceSize} onChange={(e) => set("audienceSize", e.target.value)} /></div>
+              </div>
+              <div><label className="form-label" htmlFor="contact-venue">Venue Name</label><input id="contact-venue" className="input" placeholder="e.g., KICC Nakuru" value={form.venueName} onChange={(e) => set("venueName", e.target.value)} /></div>
+              <div>
+                <label className="form-label" htmlFor="contact-repertoire">Repertoire Style</label>
+                <select id="contact-repertoire" className="select" value={form.repertoireStyle} onChange={(e) => set("repertoireStyle", e.target.value)}>
+                  <option value="">Select a style...</option>
+                  <option>Gospel / Sacred</option>
+                  <option>Classical</option>
+                  <option>Afropop / Contemporary</option>
+                  <option>Corporate / Cinematic</option>
+                  <option>Mixed / Custom</option>
+                </select>
+              </div>
+            </>
+          )
+        }
 
         <div><label className="form-label" htmlFor="contact-message">Message *</label><textarea id="contact-message" className="textarea" placeholder="Tell us about your project, timeline, and any specific requirements..." value={form.message} onChange={(e) => set("message", e.target.value)} required style={{ minHeight: 120 }} /></div>
 
@@ -145,8 +149,8 @@ function ContactForm() {
         <p style={{ textAlign: "center", color: "var(--text-muted)", fontSize: "0.8125rem" }}>
           You&apos;ll receive an automatic confirmation email. We respond within 12–24 hours.
         </p>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 }
 
@@ -167,7 +171,7 @@ export default function ContactPage() {
       </section>
 
       <section className="section" style={{ background: "var(--charcoal-800)" }}>
-        <div className="container" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "4rem", alignItems: "start" }}>
+        <div className="container contact-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "4rem", alignItems: "start" }}>
           {/* Form */}
           <div className="card" style={{ padding: "2.5rem" }}>
             <Suspense fallback={<div>Loading...</div>}>
@@ -205,8 +209,18 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </section>
-      <style>{`@media(max-width:768px){.contact-grid{grid-template-columns:1fr!important}}`}</style>
+      </section >
+      <style>{`
+  @media(max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr !important;
+      gap: 2rem !important;
+    }
+    .form-input-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+`}</style>
     </>
   );
 }
