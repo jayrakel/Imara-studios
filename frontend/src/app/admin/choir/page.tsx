@@ -164,7 +164,7 @@ export default function ChoirManagerPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "1rem" }}>
             {pendingPhotos.map((photo) => (
               <div key={photo.id} id={`photo-pending-${photo.id.slice(0, 8)}`} style={{ background: "var(--charcoal-700)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--radius-md)", overflow: "hidden" }}>
-                <div style={{ aspect: "16/9", background: "var(--charcoal-600)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
+                <div style={{ aspectRatio: "16/9", background: "var(--charcoal-600)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
                   <img src={`${API}${photo.url}`} alt={photo.altText || photo.caption} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </div>
                 <div style={{ padding: "1rem" }}>
