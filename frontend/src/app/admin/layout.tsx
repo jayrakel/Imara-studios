@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, Inbox, FileText, Users, Music4, Settings,
-  LogOut, ChevronRight, Menu, X, Shield
+  LogOut, ChevronRight, Menu, X, Shield, Image as ImageIcon, Music, User
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -14,7 +14,10 @@ const navItems = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
   { href: "/admin/inquiries", label: "Inquiry Inbox", icon: Inbox },
   { href: "/admin/content", label: "Content Manager", icon: FileText },
+  { href: "/admin/media", label: "Media Library", icon: ImageIcon },
+  { href: "/admin/songs", label: "Song Library", icon: Music },
   { href: "/admin/choir", label: "Choir Manager", icon: Music4 },
+  { href: "/admin/members", label: "Choir Members", icon: User },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 

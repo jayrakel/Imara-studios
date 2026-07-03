@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import SiteImage from "@/components/common/SiteImage";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 
@@ -62,8 +63,7 @@ export default function Navbar() {
         <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
           {/* Logo */}
           <Link href="/" id="nav-logo" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
-            <Image
-              src="/images/logo.png"
+            <SiteImage imageKey="logo" fallbackSrc="/images/logo.png"
               alt="Imara Studios"
               width={60}
               height={60}

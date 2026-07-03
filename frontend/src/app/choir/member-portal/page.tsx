@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Music4, Play, Pause, Download, Lock, LogOut, Upload, ChevronDown, CheckCircle } from "lucide-react";
+import { Music4, Play, Pause, Download, LogOut, Upload, CheckCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
@@ -68,6 +68,22 @@ export default function MemberPortalPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [activeTab, setActiveTab] = useState<"songs" | "photos">("songs");
 
+  // ─── AUDIO INITIALIZATION & CLEANUP ─────────────────────────────────────────
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+      audioRef.current.addEventListener("ended", () => setPlaying(false));
+    }
+
+    // Cleanup: Stop audio instantly if the component unmounts (e.g. user leaves page)
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -83,6 +99,7 @@ export default function MemberPortalPage() {
       setUser(data.user);
       setLoggedIn(true);
       toast.success(`Welcome, ${data.user.name}! 🎶`);
+
       // Prompt password change if temp
       if (data.user.tempPassword) {
         setTimeout(() => toast("⚠️ Please change your temporary password!", { duration: 6000 }), 1000);
@@ -94,13 +111,19 @@ export default function MemberPortalPage() {
   };
 
   const handleLogout = () => {
+    // 1. Aggressively kill the audio stream
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = ""; // Stops background buffering
+    }
+
+    // 2. Reset all UI states
     setLoggedIn(false);
     setUser(null);
     setAccessToken("");
     setSongs([]);
     setCurrentSong(null);
     setPlaying(false);
-    if (audioRef.current) audioRef.current.pause();
   };
 
   const loadSongs = async (token: string) => {
@@ -121,20 +144,30 @@ export default function MemberPortalPage() {
 
   useEffect(() => {
     if (loggedIn && accessToken) loadSongs(accessToken);
-  }, [loggedIn]);
+  }, [loggedIn, accessToken]);
 
   const playSong = (song: Song) => {
-    if (currentSong?.id === song.id && audioRef.current) {
-      if (playing) { audioRef.current.pause(); setPlaying(false); }
-      else { audioRef.current.play(); setPlaying(true); }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    // SCENARIO A: User clicked the song that is currently loaded
+    if (currentSong?.id === song.id) {
+      if (playing) {
+        audio.pause();
+        setPlaying(false);
+      } else {
+        audio.play();
+        setPlaying(true);
+      }
       return;
     }
-    if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = song.url; audioRef.current.play(); }
-    else {
-      audioRef.current = new Audio(song.url);
-      audioRef.current.addEventListener("ended", () => setPlaying(false));
-      audioRef.current.play();
-    }
+
+    // SCENARIO B: User clicked a NEW song
+    // Force the old song to stop immediately before loading the new one
+    audio.pause();
+    audio.src = song.url;
+    audio.play();
+
     setCurrentSong(song);
     setPlaying(true);
   };

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, Users, Music4, Mic2 } from "lucide-react";
 import type { Metadata } from "next";
+import SiteImage from "@/components/common/SiteImage";
 
 export const metadata: Metadata = {
   title: "The Imara Choir — Performances, Events & Bookings",
@@ -32,7 +33,7 @@ export default function ChoirPage() {
       {/* Hero */}
       <section style={{ paddingTop: "9rem", paddingBottom: "5rem", background: "var(--charcoal-900)", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/choir-hero.jpg" alt="The Imara Chorale" fill style={{ objectFit: "cover", opacity: 0.3 }} />
+          <SiteImage imageKey="hero_choir" fallbackSrc="/images/choir-hero.jpg" alt="The Imara Chorale" fill style={{ objectFit: "cover", opacity: 0.3 }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(8,8,8,0.95) 40%, rgba(8,8,8,0.6) 100%)" }} />
         </div>
         <div className="container" style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "center" }}>

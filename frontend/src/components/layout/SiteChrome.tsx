@@ -6,7 +6,7 @@ import FloatBookButton from "./FloatBookButton";
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
-    const isAdmin = pathname?.startsWith("/admin");
+    const isAdmin = pathname?.startsWith("/admin") || pathname?.startsWith("/member");
 
     if (isAdmin) return <>{children}</>;
 

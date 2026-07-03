@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import SiteImage from "@/components/common/SiteImage";
 
 export const metadata: Metadata = {
   title: "Vocal Training — Studio Services",
@@ -20,7 +21,7 @@ export default function VocalTrainingPage() {
     <>
       <section style={{ paddingTop: "9rem", paddingBottom: "5rem", background: "var(--charcoal-900)", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/vocal-training.jpg" alt="Vocal training session" fill style={{ objectFit: "cover", opacity: 0.25 }} />
+          <SiteImage imageKey="vocal_training" fallbackSrc="/images/vocal-training.jpg" alt="Vocal training session" fill style={{ objectFit: "cover", opacity: 0.25 }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(13,13,13,1) 40%, rgba(13,13,13,0.6) 100%)" }} />
         </div>
         <div className="container" style={{ position: "relative", zIndex: 1 }}>

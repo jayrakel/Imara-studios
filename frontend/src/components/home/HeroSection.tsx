@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Play } from "lucide-react";
+import SiteImage from "../common/SiteImage";
 
 export default function HeroSection() {
   const [loaded, setLoaded] = useState(false);
@@ -72,7 +73,7 @@ export default function HeroSection() {
       {/* Background Image */}
       < div style={{ position: "absolute", inset: 0, zIndex: 0 }
       }>
-        <Image src="/images/studio-hero.jpg" alt="Imara Studios recording studio" fill priority style={{ objectFit: "cover" }}
+        <SiteImage imageKey="hero_studio" fallbackSrc="/images/studio-hero.jpg" alt="Imara Studios recording studio" fill priority style={{ objectFit: "cover" }}
           sizes="100vw" quality={90} />
         {/* Dark overlay */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.6) 60%, rgba(8,8,8,0.75) 100%)" }} />
