@@ -18,6 +18,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://imarastudios.co.ke'),
   title: {
     template: "%s | Imara Studios",
     default: "Imara Studios — Premium Music & Media Production | Nakuru",

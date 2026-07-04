@@ -36,15 +36,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       return;
     }
 
-    // Verify the token is actually still valid, not just present
+    // Verify the token is actually still valid AND that the user has staff role
     fetch(`${API}/api/auth/me`, {
       headers: { Authorization: `Bearer ${token}` },
-    }).then((res) => {
+    }).then(async (res) => {
       if (!res.ok) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("adminUser");
         router.replace("/admin/login");
       } else {
+        const data = await res.json();
+        const allowedRoles = ["SUPER_ADMIN", "STUDIO_ENGINEER", "CHOIR_DIRECTOR"];
+        if (!allowedRoles.includes(data.role)) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("adminUser");
+          router.replace("/admin/login");
+          return;
+        }
+        localStorage.setItem("adminUser", JSON.stringify(data));
         setChecking(false);
       }
     }).catch(() => {
